@@ -8,8 +8,6 @@ extra_compile_args = [
     '-std=c++11',
     '-O3',
     '-Wall',
-    '-Wextra',
-    '-Wconversion',
     '-fno-strict-aliasing',
     '-fno-rtti',
 ]
@@ -34,9 +32,17 @@ setup(
     ext_modules=[Extension(
         'rocksdb._rocksdb',
         ['rocksdb/_rocksdb.pyx'],
+        include_dirs=[
+            'C:/Program Files/rocksdb/include',
+            'C:/Program Files/rocksdb/build/rocksdb-shared.dir/Release',
+            'C:/Program Files/rocksdb/build/Release'
+        ],
         extra_compile_args=extra_compile_args,
         language='c++',
-        libraries=['rocksdb', 'snappy', 'bz2', 'z', 'lz4'],
+        libraries=['rocksdb', 'Shlwapi', 'Rpcrt4'],
+        library_dirs=[
+            'C:/Program Files/rocksdb/build/Release'
+        ]
     )],
     extras_require={
         "doc": ['sphinx_rtd_theme', 'sphinx'],
