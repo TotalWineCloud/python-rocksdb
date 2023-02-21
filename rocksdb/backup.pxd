@@ -9,11 +9,11 @@ from status cimport Status
 from db cimport DB
 from env cimport Env
 
-cdef extern from "rocksdb/utilities/backupable_db.h" namespace "rocksdb":
+cdef extern from "rocksdb/utilities/backup_engine.h" namespace "rocksdb":
     ctypedef uint32_t BackupID
 
-    cdef cppclass BackupableDBOptions:
-        BackupableDBOptions(const string& backup_dir)
+    cdef cppclass BackupEngineOptions:
+        BackupEngineOptions(const string& backup_dir)
 
     cdef struct BackupInfo:
         BackupID backup_id
@@ -30,6 +30,6 @@ cdef extern from "rocksdb/utilities/backupable_db.h" namespace "rocksdb":
         Status RestoreDBFromLatestBackup(string&, string&) nogil except+
 
     cdef Status BackupEngine_Open "rocksdb::BackupEngine::Open"(
+            BackupEngineOptions&,
             Env*,
-            BackupableDBOptions&,
             BackupEngine**)

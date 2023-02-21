@@ -5,9 +5,11 @@ from setuptools import Extension
 
 
 extra_compile_args = [
-    '-std=c++11',
+    '-std=c++17',
     '-O3',
     '-Wall',
+    '-Wextra',
+    '-Wconversion',
     '-fno-strict-aliasing',
     '-fno-rtti',
 ]
@@ -18,7 +20,7 @@ if platform.system() == 'Darwin':
 
 setup(
     name="python-rocksdb",
-    version='0.7.0',
+    version='0.8.0',
     description="Python bindings for RocksDB",
     keywords='rocksdb',
     author='Ming Hsuan Tu',
@@ -32,17 +34,9 @@ setup(
     ext_modules=[Extension(
         'rocksdb._rocksdb',
         ['rocksdb/_rocksdb.pyx'],
-        include_dirs=[
-            'C:/Program Files/rocksdb/include',
-            'C:/Program Files/rocksdb/build/rocksdb-shared.dir/Release',
-            'C:/Program Files/rocksdb/build/Release'
-        ],
         extra_compile_args=extra_compile_args,
         language='c++',
-        libraries=['rocksdb', 'Shlwapi', 'Rpcrt4'],
-        library_dirs=[
-            'C:/Program Files/rocksdb/build/Release'
-        ]
+        libraries=['rocksdb', 'snappy', 'bz2', 'z', 'lz4'],
     )],
     extras_require={
         "doc": ['sphinx_rtd_theme', 'sphinx'],
